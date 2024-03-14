@@ -73,7 +73,8 @@ func (wp *workerPool) run(ctx context.Context) {
 		select {
 		case <-ctx.Done():
 			return
-		case task, ok := <-wp.Tasks():
+		default:
+			task, ok := <-wp.Tasks()
 			if ok {
 				wp.Results() <- task.Func(task.Args...)
 			} else {
